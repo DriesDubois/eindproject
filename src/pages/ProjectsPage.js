@@ -1,9 +1,10 @@
 import {Projects} from "../components/Projects";
+import {PROJECTS_DATA} from "../data/projectsdata";
 
-export function ProjectsPage(props) {
-    const {projects} = props
+export function ProjectsPage() {
+
     return (
-            <Projects projects={projects} title="alle projecten"/>
+            <Projects projects={PROJECTS_DATA} title="alle projecten"/>
 
     );
 }

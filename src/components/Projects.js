@@ -17,7 +17,7 @@ function Project(props) {
         <ProjectCard>
             {project?.title && <div>{project.title}</div>}
             {project?.picturePathName && <img src={`images/${project.picturePathName}`}
-                                              width="100%"
+                                              width="20%"
                                               alt={`${project.picturePathName}`}/>}
         </ProjectCard>
     )

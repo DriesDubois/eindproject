@@ -1,19 +1,33 @@
-import './App.css';
+import {
+    Routes,
+    Route, HashRouter,
+} from "react-router-dom";
+import {HomePage} from "./pages/HomePage";
+import {MyNavbar} from "./fragments/Navbar";
+import {AboutPage} from "./pages/AboutPage";
+import {ProjectsPage} from "./pages/ProjectsPage";
+import {PROJECTS_DATA} from "./data/projectsdata";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {AppRouter} from "./AppRouter";
 
-function App() {
-  return (
-  <>
-    <ul>
-      <li><a href="http://localhost:3000/pages/HomePage">Home</a></li>
-      <li><a href="http://localhost:3000/pages/AboutPage">About us</a></li>
-      <li><a href="http://localhost:3000/pages/ProjectsPage">Projects</a></li>
-    </ul>
+function ProvidedApp() {
 
-    <AppRouter/>
-  </>
-  );
+    return (
+        <HashRouter>
+            <MyNavbar/>
+            <Routes>
+                <Route path={`/`} element={<HomePage/>}/>
+                <Route path={`/HomePage`} element={<HomePage/>}/>
+                <Route path={`AboutPage`} element={<AboutPage/>}/>
+                <Route path={`ProjectsPage`} element={<ProjectsPage/>}/>
+            </Routes>
+        </HashRouter>
+    )
 }
 
-export default App;
+
+export default function App() {
+    return (<ProvidedApp/>
+
+    );
+}
+
