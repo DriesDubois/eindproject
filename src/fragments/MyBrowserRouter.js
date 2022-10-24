@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {AboutPage} from "../pages/AboutPage";
+import {HomePage} from "../pages/HomePage";
 export function MyBrowserRouter(){
     return <BrowserRouter>
         <Routes>
@@ -8,6 +9,12 @@ export function MyBrowserRouter(){
                 // - /files
                 path="/AboutPage"
                 element={<AboutPage/>}
+            />;
+            <Route
+                // this path will match URLs like
+                // - /files
+                path="/"
+                element={<HomePage/>}
             />;
         </Routes>
 

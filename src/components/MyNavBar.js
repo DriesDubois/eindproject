@@ -7,12 +7,12 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
 export function MyNavBar() {
-    const expand="xxl";
+    const expand="sm";
     return (
         <>
             <Navbar key={expand} bg="light" expand={expand} className="mb-3">
                     <Container fluid>
-                        <Navbar.Brand href="#">Navbar Offcanvas</Navbar.Brand>
+                        <Navbar.Brand href="/">ArcoLinux - Webshop</Navbar.Brand>
                         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
                         <Navbar.Offcanvas
                             id={`offcanvasNavbar-expand-${expand}`}
@@ -26,13 +26,13 @@ export function MyNavBar() {
                             </Offcanvas.Header>
                             <Offcanvas.Body>
                                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                                    <Nav.Link href="#action1">Home</Nav.Link>
+                                    <Nav.Link href="/">Home</Nav.Link>
                                     <Nav.Link href="/AboutPage">About us</Nav.Link>
                                     <NavDropdown
-                                        title="Dropdown"
+                                        title="Shopping Cart"
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}
                                     >
-                                        <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+                                        <NavDropdown.Item href="#action3">Open Cart</NavDropdown.Item>
                                         <NavDropdown.Item href="#action4">
                                             Another action
                                         </NavDropdown.Item>
