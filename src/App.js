@@ -1,26 +1,16 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {AboutPage} from "./pages/AboutPage";
+import {MyNavBar} from "./components/MyNavBar";
+import {MyBrowserRouter} from "./fragments/MyBrowserRouter";
 
 
 function App() {
     return (
         <>
-            <BrowserRouter>
-                <Routes>
-                    <Route
-                        // this path will match URLs like
-                        // - /files
-                        path="/AboutPage"
-                        element={<AboutPage/>}
-                    />;
-                </Routes>
+            <MyNavBar/>
+            <MyBrowserRouter/>
 
-            </BrowserRouter>
-            <a href="/Aboutpage">about us</a>
-
-        </>
+    </>
     );
 }
 
