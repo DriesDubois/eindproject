@@ -1,3 +1,4 @@
 export function AboutPage (){
-    return <p>about page van de site</p>
+    const secret = process.env.REACT_APP_SECRET;
+    return <p>about page van de site ${secret}</p>
 }
