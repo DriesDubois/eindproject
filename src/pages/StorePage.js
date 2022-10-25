@@ -1,6 +1,26 @@
+import {collection} from 'firebase/firestore'
+import {firestoreDB} from "../services/firebase";
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+
+const firestoreConverter = {
+    toFirestore: function (dataInApp) {
+        return {
+            name: dataInApp.name
+        }
+    },
+    fromFirestore: function (snapshot, options) {
+        const data = snapshot.data(options);
+        return {...data, id: snapshot.id, ref: snapshot.ref}
+    }
+};
+
 export function StorePage(){
+    const collectionRef = collection(firestoreDB, 'Test-Items').withConverter(firestoreConverter);
+    const [values, loading, error] = useCollectionData(collectionRef);
+    console.log({values, loading, error});
+
 
     return <div>
-        <h2>This is the store page</h2>
+        <h1>Webshop</h1>
     </div>
 }

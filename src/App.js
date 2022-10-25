@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {MyNavBar} from "./components/MyNavBar";
 import {MyBrowserRouter} from "./fragments/MyBrowserRouter";
 import "./services/firebase";
+import {MyFooter} from "./components/MyFooter";
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <>
             <MyNavBar/>
             <MyBrowserRouter/>
+            <MyFooter/>
     </>
     );
 }
