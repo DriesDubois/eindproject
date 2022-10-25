@@ -7,11 +7,11 @@ export function MyBrowserRouter(){
             <Route
                 // this path will match URLs like
                 // - /AboutPage
-                path="/AboutPage"
+                path="/eindproject/AboutPage"
                 element={<AboutPage/>}
             />;
             <Route
-                path="/"
+                path="/eindproject"
                 element={<HomePage/>}
             />;
         </Routes>
