@@ -1,20 +1,20 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import {AboutPage} from "../pages/AboutPage";
 import {HomePage} from "../pages/HomePage";
 export function MyBrowserRouter(){
-    return <BrowserRouter>
+    return <HashRouter>
         <Routes>
             <Route
                 // this path will match URLs like
                 // - /AboutPage
-                path="/eindproject/AboutPage"
+                path="AboutPage"
                 element={<AboutPage/>}
             />;
-            <Route
-                path="/eindproject"
+            <Route index
+                path="/"
                 element={<HomePage/>}
             />;
         </Routes>
 
-    </BrowserRouter>
+    </HashRouter>
 }

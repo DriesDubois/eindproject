@@ -26,8 +26,8 @@ export function MyNavBar() {
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
-                                <Nav.Link href="/">Home</Nav.Link>
-                                <Nav.Link href="/AboutPage">About us</Nav.Link>
+                                <Nav.Link href="#/">Home</Nav.Link>
+                                <Nav.Link href="#/AboutPage">About us</Nav.Link>
                                 <NavDropdown
                                     title="Shopping Cart"
                                     id={`offcanvasNavbarDropdown-expand-${expand}`}
