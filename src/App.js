@@ -11,7 +11,6 @@ function App() {
         <>
             <MyNavBar/>
             <MyBrowserRouter/>
-
     </>
     );
 }
