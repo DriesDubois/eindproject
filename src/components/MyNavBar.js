@@ -12,7 +12,7 @@ export function MyNavBar() {
             <Navbar sticky="top" key={expand} expand={expand} className="pb-3" style={{backgroundColor:"rgba(102,102,102,0.6)",fontFamily: "Iceberg",fontSize:"22px",fontWeight:"bold",fontTransform:"uppercase",backdropFilter:"blur(5px)"}}>
                 <Container fluid>
 
-                    <Navbar.Brand href="#/">ArcoLinux - Webshop</Navbar.Brand>
+                    <Navbar.Brand style={{color:"#cd5c5c",fontWeight:"bold"}} href="#/">ArcoLinux - Webshop</Navbar.Brand>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}/>
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand-${expand}`}
