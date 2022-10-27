@@ -11,6 +11,7 @@ export function MyNavBar() {
         <>
             <Navbar key={expand} expand={expand} className="pb-3" style={{backgroundColor:"#666"}}>
                 <Container fluid>
+
                     <Navbar.Brand href="#/">ArcoLinux - Webshop</Navbar.Brand>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}/>
                     <Navbar.Offcanvas
