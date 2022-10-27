@@ -9,7 +9,7 @@ export function MyNavBar() {
     const expand = "sm";
     return (
         <>
-            <Navbar key={expand} expand={expand} className="pb-3" style={{backgroundColor:"#666"}}>
+            <Navbar sticky="top" key={expand} expand={expand} className="pb-3" style={{backgroundColor:"rgba(102,102,102,0.6)",fontFamily: "Iceberg",fontSize:"22px",fontWeight:"bold",fontTransform:"uppercase",backdropFilter:"blur(5px)"}}>
                 <Container fluid>
 
                     <Navbar.Brand href="#/">ArcoLinux - Webshop</Navbar.Brand>
