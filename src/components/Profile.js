@@ -1,6 +1,6 @@
 import {useAuthValue} from '../contexts/AuthContext'
 import { signOut } from 'firebase/auth'
-import { auth } from '../services/firebase'
+import { auth } from '../utils/firebase'
 import Button from "react-bootstrap/Button";
 
 export function Profile() {

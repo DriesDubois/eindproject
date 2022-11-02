@@ -3,11 +3,11 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {MyNavBar} from "./components/MyNavBar";
 import {MyBrowserRouter} from "./fragments/MyBrowserRouter";
-import "./services/firebase";
+import "./utils/firebase";
 import {MyFooter} from "./components/MyFooter";
 import {AuthProvider} from './contexts/AuthContext'
 import {useState, useEffect} from 'react'
-import {auth} from './services/firebase'
+import {auth} from './utils/firebase'
 import {onAuthStateChanged} from 'firebase/auth'
 
 function App() {

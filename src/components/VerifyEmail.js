@@ -1,6 +1,6 @@
 import {useAuthValue} from '../contexts/AuthContext'
 import {useState,useEffect} from 'react'
-import {auth} from '../services/firebase'
+import {auth} from '../utils/firebase'
 import {sendEmailVerification} from 'firebase/auth'
 import {useNavigate} from 'react-router-dom'
 

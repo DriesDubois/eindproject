@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuthValue } from "../contexts/AuthContext"
 
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
-import {auth} from '../services/firebase'
+import {auth} from '../utils/firebase'
 import {useNavigate} from 'react-router-dom'
 
 export function Login(){

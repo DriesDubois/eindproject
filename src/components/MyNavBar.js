@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {useAuthValue} from '../contexts/AuthContext'
-import {auth} from "../services/firebase";
+import {auth} from "../utils/firebase";
 
 
 export function MyNavBar() {

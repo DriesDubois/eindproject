@@ -1,5 +1,5 @@
 import {collection} from 'firebase/firestore'
-import {firestoreDB} from "../services/firebase";
+import {firestoreDB} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
 import {CardGroup} from "react-bootstrap";
