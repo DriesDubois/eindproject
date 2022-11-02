@@ -32,7 +32,7 @@ export function StorePage(){
         <label htmlFor="search">search: </label>
         <input id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
         <label htmlFor="search">max Price: </label>
-        <input id="search" value={maxPriceInput} onChange={e => setMaxPriceInput(e.target.value)}/>
+        <input id="search" type="number" min="0" max="100" value={maxPriceInput} onChange={e => setMaxPriceInput(e.target.value)}/>
         <Form className="mx-3">
             <Form.Label>short sleeves</Form.Label><br/>
             <Form.Check inline checked={shortSleeves===false} label="lange mouwen" name="shortSleeves"
