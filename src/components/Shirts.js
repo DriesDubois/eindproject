@@ -1,5 +1,9 @@
 import {Section} from "./Section";
 import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
+import {auth} from "../utils/firebase";
+import {useAuthValue} from "../contexts/AuthContext";
+
 
 
 export function Shirts(props) {
@@ -15,6 +19,8 @@ export function Shirts(props) {
 
 export function Shirt(props) {
     let {shirt} = props;
+    const {adminList} = useAuthValue()
+
 
     return (
         <Card style={{width:"350px"}}>
@@ -25,6 +31,7 @@ export function Shirt(props) {
                 {shirt.description && <p className="text-center">{shirt.description} </p>}
             </Card.Body>
             {shirt.image && <Card.Img style={{maxWidth: "300px"}} variant="bottom" src={shirt.image}/>}
+            {adminList.includes(auth.currentUser?.email) && <Button variant="danger">Delete</Button>}
         </Card>
     )
 

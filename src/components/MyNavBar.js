@@ -4,13 +4,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import {useAuthValue} from '../contexts/AuthContext'
+// import {useAuthValue} from '../contexts/AuthContext'
 import {auth} from "../utils/firebase";
 
 
 export function MyNavBar() {
     const expand = "sm";
-    const {currentUser} = useAuthValue()
+    // const {currentUser} = useAuthValue()
 
     return (
         <>

@@ -1,4 +1,4 @@
-import {collection,getFirestore} from 'firebase/firestore'
+import {collection} from 'firebase/firestore'
 import {firestoreDB} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
@@ -9,7 +9,9 @@ import {filterItems} from "../utils/Filters";
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
         return {
-            name: dataInApp.name
+            name: dataInApp.name,
+            price:Number(dataInApp.price),
+            description: dataInApp.description,
         }
     },
     fromFirestore: function (snapshot, options) {

@@ -12,6 +12,7 @@ import {onAuthStateChanged} from 'firebase/auth'
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
+    const [adminList, setAdminList] = useState(process.env.REACT_APP_ADMINS.split(' '))
 
     // this is here so that the timer on user registration starts immediatly
     //so theres no firebase errors if user clicks resend email right after making account
@@ -20,12 +21,13 @@ function App() {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             setCurrentUser(user)
+            setAdminList(process.env.REACT_APP_ADMINS.split(' '))
         })
     }, [])
 
     return (
         <>
-            <AuthProvider value={{currentUser,timeActive, setTimeActive}}>
+            <AuthProvider value={{currentUser,timeActive, setTimeActive,adminList}}>
                 <MyNavBar/>
                 <MyBrowserRouter/>
                 <MyFooter/>
