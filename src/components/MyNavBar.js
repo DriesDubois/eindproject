@@ -4,9 +4,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import {useAuthValue} from '../contexts/AuthContext'
+import {auth} from "../services/firebase";
+
 
 export function MyNavBar() {
     const expand = "sm";
+    const {currentUser} = useAuthValue()
+
     return (
         <>
             <Navbar sticky="top" key={expand} expand={expand} className="pb-3" style={{backgroundColor:"rgba(102,102,102,0.6)",fontFamily: "Iceberg",fontSize:"22px",fontWeight:"bold",fontTransform:"uppercase",backdropFilter:"blur(5px)"}}>
@@ -43,7 +48,7 @@ export function MyNavBar() {
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
-                            <Button variant="dark">Login</Button>
+                            {auth.currentUser? <Button href="#/Profile" variant="dark">Profile</Button>:<Button href="#/Login" variant="dark">Login</Button>}
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
                 </Container>

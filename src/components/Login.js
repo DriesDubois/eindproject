@@ -6,7 +6,7 @@ import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {auth} from '../services/firebase'
 import {useNavigate} from 'react-router-dom'
 
-function Login(){
+export function Login(){
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -64,5 +64,3 @@ function Login(){
         </div>
     )
 }
-
-export default Login

@@ -4,7 +4,7 @@ import {useNavigate, Link} from 'react-router-dom'
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {useAuthValue} from '../contexts/AuthContext'
 
-function Register() {
+export function Register() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -82,5 +82,3 @@ function Register() {
         </div>
     )
 }
-
-export default Register

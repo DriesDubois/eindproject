@@ -4,7 +4,7 @@ import {auth} from '../services/firebase'
 import {sendEmailVerification} from 'firebase/auth'
 import {useNavigate} from 'react-router-dom'
 
-function VerifyEmail() {
+export function VerifyEmail() {
     const {currentUser} = useAuthValue()
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [time, setTime] = useState(60)
@@ -77,5 +77,3 @@ function VerifyEmail() {
         </div>
     )
 }
-
-export default VerifyEmail

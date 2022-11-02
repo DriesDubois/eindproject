@@ -2,9 +2,9 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import {AboutPage} from "../pages/AboutPage";
 import {HomePage} from "../pages/HomePage";
 import {StorePage} from "../pages/StorePage";
-import Register from "../components/Register";
-import Login from "../components/Login";
-import VerifyEmail from "../components/VerifyEmail";
+import {Register} from "../components/Register";
+import {Login} from "../components/Login";
+import {VerifyEmail} from "../components/VerifyEmail";
 import {Profile} from "../components/Profile";
 export function MyBrowserRouter(){
     return <HashRouter>
