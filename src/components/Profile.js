@@ -1,6 +1,7 @@
 import {useAuthValue} from '../contexts/AuthContext'
 import { signOut } from 'firebase/auth'
 import { auth } from '../services/firebase'
+import Button from "react-bootstrap/Button";
 
 export function Profile() {
     const {currentUser} = useAuthValue()
@@ -14,7 +15,7 @@ export function Profile() {
                     <strong>Email verified: </strong>
                     {`${currentUser?.emailVerified}`}
                 </p>
-                <span onClick={() => signOut(auth)}>Sign Out</span>
+                <Button onClick={() => signOut(auth)} variant="outline-danger" href="#/">Sign Out</Button>
             </div>
         </div>
     )
