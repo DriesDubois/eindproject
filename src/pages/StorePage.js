@@ -21,11 +21,9 @@ const firestoreConverter = {
 export function StorePage(){
     const collectionRef = collection(firestoreDB, 'Test-Items').withConverter(firestoreConverter);
     const [shortSleeves, setShortSleeves] = useState(undefined);
-    const [selectedPerson, setSelectedPerson] = useState(undefined);
     const [searchInput, setSearchInput] = useState("");
     const [maxPriceInput, setMaxPriceInput] = useState("");
     const [values, loading, error] = useCollectionData(collectionRef);
-    const db = getFirestore();
     console.log({values, loading, error});
 
 
@@ -47,7 +45,7 @@ export function StorePage(){
                         type="radio" id="shortSleeves-2"
                         onChange={() => setShortSleeves(undefined)}/>
         </Form>
-        <CardGroup><Shirts shirts={filterItems(values,searchInput,shortSleeves,maxPriceInput)} onSelectPerson={p => setSelectedPerson(p)}></Shirts></CardGroup>
+        <CardGroup><Shirts shirts={filterItems(values,searchInput,maxPriceInput,shortSleeves)} ></Shirts></CardGroup>
 
     </div>
 }
