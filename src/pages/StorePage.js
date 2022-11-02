@@ -1,6 +1,8 @@
 import {collection} from 'firebase/firestore'
 import {firestoreDB} from "../services/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
+import {Shirts} from "../components/Shirts";
+import {CardGroup} from "react-bootstrap";
 
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
@@ -22,5 +24,7 @@ export function StorePage(){
 
     return <div>
         <h1>Webshop</h1>
+        <CardGroup><Shirts shirts={values}></Shirts></CardGroup>
+
     </div>
 }
