@@ -10,7 +10,6 @@ import {auth} from "../utils/firebase";
 
 export function MyNavBar() {
     const expand = "sm";
-    // const {currentUser} = useAuthValue()
 
     return (
         <>
@@ -38,14 +37,7 @@ export function MyNavBar() {
                                     title="Shopping Cart"
                                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                                 >
-                                    <NavDropdown.Item href="#action3">Open Cart</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action4">
-                                        Another action
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Divider/>
-                                    <NavDropdown.Item href="#action5">
-                                        Something else here
-                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="#/Cart">Open my Cart</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                             {auth.currentUser? <Button href="#/Profile" variant="dark">Profile</Button>:<Button href="#/Login" variant="dark">Login</Button>}

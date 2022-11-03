@@ -9,6 +9,7 @@ import {AuthProvider} from './contexts/AuthContext'
 import {useState, useEffect} from 'react'
 import {auth} from './utils/firebase'
 import {onAuthStateChanged} from 'firebase/auth'
+import {CartProvider} from "./contexts/cartContext";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
@@ -27,10 +28,12 @@ function App() {
 
     return (
         <>
-            <AuthProvider value={{currentUser,timeActive, setTimeActive,adminList}}>
-                <MyNavBar/>
-                <MyBrowserRouter/>
-                <MyFooter/>
+            <AuthProvider value={{currentUser, timeActive, setTimeActive, adminList}}>
+                <CartProvider>
+                    <MyNavBar/>
+                    <MyBrowserRouter/>
+                    <MyFooter/>
+                </CartProvider>
             </AuthProvider>
         </>
     );
