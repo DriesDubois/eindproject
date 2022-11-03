@@ -1,4 +1,4 @@
-import {collection,updateDoc} from 'firebase/firestore'
+import {collection,updateDoc,deleteDoc} from 'firebase/firestore'
 import {firestoreDB} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
@@ -72,6 +72,15 @@ export function StorePage(){
         setItemSelected(item);
     }
 
+    async function deleteItem(item) {
+        try {
+            await deleteDoc(item.ref);
+            console.log(`delete item ${item.name} done`)
+        } catch {
+            console.log(`ERROR delete item ${item.name} NOT done`)
+        }
+    }
+
     async function editItemSave(item) {
         try {
             console.log(item)
@@ -112,6 +121,7 @@ export function StorePage(){
         </div>
         <CardGroup><Shirts shirts={filterItems(values,searchInput,maxPriceInput,shortSleeves)}
                            onEditItem={editItem}
+                           onDeleteItem={deleteItem}
         /></CardGroup>
 
     </div>

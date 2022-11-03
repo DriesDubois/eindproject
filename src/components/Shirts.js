@@ -7,17 +7,19 @@ import {useAuthValue} from "../contexts/AuthContext";
 
 
 export function Shirts(props) {
-    const {shirts,title,onEditItem} = props;
+    const {shirts,title,onEditItem,onDeleteItem} = props;
     if (!shirts) return;
     return (
         <Section title={title}>
-            {shirts.map(s => <Shirt onEditItem={onEditItem} key={s.id} shirt={s}/>)}
+            {shirts.map(s => <Shirt onEditItem={onEditItem}
+                                    onDeleteItem={onDeleteItem}
+                                    key={s.id} shirt={s}/>)}
         </Section>
     )
 }
 
 export function Shirt(props) {
-    let {shirt,onEditItem} = props;
+    let {shirt,onEditItem,onDeleteItem} = props;
     const {adminList} = useAuthValue()
 
 
@@ -31,6 +33,7 @@ export function Shirt(props) {
             </Card.Body>
             {shirt.image && <Card.Img style={{maxWidth: "300px"}} variant="bottom" src={shirt.image}/>}
             {adminList.includes(auth.currentUser?.email) && <Button onClick={() => onEditItem(shirt)} variant="info">Edit</Button>}
+            {adminList.includes(auth.currentUser?.email) && <Button onClick={() => onDeleteItem(shirt)} variant="danger">Delete Item</Button>}
         </Card>
     )
 
