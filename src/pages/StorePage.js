@@ -1,11 +1,12 @@
-import {collection,updateDoc,deleteDoc} from 'firebase/firestore'
-import {firestoreDB} from "../utils/firebase";
+import {collection,updateDoc,deleteDoc,addDoc} from 'firebase/firestore'
+import {auth, firestoreDB} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
 import {CardGroup, Form, Modal} from "react-bootstrap";
 import {useState} from "react";
 import {filterItems} from "../utils/Filters";
 import Button from "react-bootstrap/Button";
+import {useAuthValue} from "../contexts/AuthContext";
 
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
@@ -58,19 +59,59 @@ function ItemFormEdit(props) {
     );
 }
 
+function ItemFormAdd(props) {
+    const {onSaveItem,onClose} = props;
+    const [itemToAdd, setItemToAdd] = useState({name:"item name",price:0,description:"description here"});
+    return (
+        <Modal show={!!itemToAdd} onHide={onClose}>
+            <Modal.Header closeButton>
+                <h3 className="ms-2">Add item</h3>
+            </Modal.Header>
+            <div className="m-3 mt-0">
+                <Form>
+                    <Form.Label className="mt-2 ms-1">name:</Form.Label>
+                    <Form.Control
+                        value={itemToAdd.name}
+                        onChange={e => setItemToAdd({...itemToAdd, name: e.target.value})}/>
+                    <Form.Label className="mt-2 ms-1">price:</Form.Label>
+                    <Form.Control
+                        value={itemToAdd.price}
+                        onChange={e => setItemToAdd({...itemToAdd, price: Number(e.target.value)})}/>
+                    <Form.Label className="mt-2 ms-1">description:</Form.Label>
+                    <Form.Control
+                        value={itemToAdd.description}
+                        onChange={e => setItemToAdd({...itemToAdd, description: e.target.value})}/>
+                </Form>
+                <div className="d-flex justify-content-center p-2">
+                    <Button className="m-1" size="lg" onClick={() => onClose()}>cancel</Button>
+                    <Button className="m-1" size="lg" onClick={async () => {
+                        if (await onSaveItem(itemToAdd)) onClose();
+                    }}>save</Button>
+                </div>
+            </div>
+        </Modal>
+    );
+}
+
+
+
 export function StorePage(){
     const collectionRef = collection(firestoreDB, 'Test-Items').withConverter(firestoreConverter);
     const [shortSleeves, setShortSleeves] = useState(undefined);
     const [searchInput, setSearchInput] = useState("");
+    const [addItemForm, setAddItemForm] = useState(false);
     const [maxPriceInput, setMaxPriceInput] = useState("");
     const [values, loading, error] = useCollectionData(collectionRef);
     const [itemSelected, setItemSelected] = useState();
     console.log({values, loading, error});
+    const {adminList} = useAuthValue()
 
     function editItem(item) {
         console.log(`editing item ${item.name}`);
         setItemSelected(item);
     }
+
+
 
     async function deleteItem(item) {
         try {
@@ -78,6 +119,15 @@ export function StorePage(){
             console.log(`delete item ${item.name} done`)
         } catch {
             console.log(`ERROR delete item ${item.name} NOT done`)
+        }
+    }
+
+    async function addItemSave(item) {
+        try {
+            await addDoc(collectionRef, item);
+            console.log("add item done")
+        } catch {
+            console.log("ERROR add item NOT done")
         }
     }
 
@@ -95,22 +145,24 @@ export function StorePage(){
 
     return <div>
         <h1>Webshop</h1>
+        {adminList.includes(auth.currentUser?.email) && <Button onClick={()=>setAddItemForm(!addItemForm)}>add item</Button>}
+
         <label htmlFor="search">search: </label>
         <input id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
         <label htmlFor="search">max Price: </label>
         <input id="search" type="number" min="0" max="100" value={maxPriceInput} onChange={e => setMaxPriceInput(e.target.value)}/>
-        <Form className="mx-3">
-            <Form.Label>short sleeves</Form.Label><br/>
-            <Form.Check inline checked={shortSleeves===false} label="lange mouwen" name="shortSleeves"
-                        type="radio" id="shortSleeves-0"
-                        onChange={() => setShortSleeves(false)}/>
-            <Form.Check inline checked={shortSleeves===true} label="korte mouwen" name="shortSleeves"
-                        type="radio" id="shortSleeves-1"
-                        onChange={() => setShortSleeves(true)}/>
-            <Form.Check inline checked={shortSleeves===undefined} label="geen voorkeur" name="shortSleeves"
-                        type="radio" id="shortSleeves-2"
-                        onChange={() => setShortSleeves(undefined)}/>
-        </Form>
+        {/*<Form className="mx-3">*/}
+        {/*    <Form.Label>short sleeves</Form.Label><br/>*/}
+        {/*    <Form.Check inline checked={shortSleeves===false} label="lange mouwen" name="shortSleeves"*/}
+        {/*                type="radio" id="shortSleeves-0"*/}
+        {/*                onChange={() => setShortSleeves(false)}/>*/}
+        {/*    <Form.Check inline checked={shortSleeves===true} label="korte mouwen" name="shortSleeves"*/}
+        {/*                type="radio" id="shortSleeves-1"*/}
+        {/*                onChange={() => setShortSleeves(true)}/>*/}
+        {/*    <Form.Check inline checked={shortSleeves===undefined} label="geen voorkeur" name="shortSleeves"*/}
+        {/*                type="radio" id="shortSleeves-2"*/}
+        {/*                onChange={() => setShortSleeves(undefined)}/>*/}
+        {/*</Form>*/}
         <div>
             <>
                 {itemSelected && <ItemFormEdit
@@ -119,9 +171,17 @@ export function StorePage(){
                     onSaveItem={editItemSave}/>}
             </>
         </div>
+        <div>
+            <>
+                {addItemForm && <ItemFormAdd
+                    onSaveItem={addItemSave}
+                    onClose={() => setAddItemForm(false)}/>}
+            </>
+        </div>
         <CardGroup><Shirts shirts={filterItems(values,searchInput,maxPriceInput,shortSleeves)}
                            onEditItem={editItem}
-                           onDeleteItem={deleteItem}
+                           onDeleteItem={deleteItem
+        }
         /></CardGroup>
 
     </div>
