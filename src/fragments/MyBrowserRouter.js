@@ -6,6 +6,7 @@ import {Register} from "../components/Register";
 import {Login} from "../components/Login";
 import {VerifyEmail} from "../components/VerifyEmail";
 import {Profile} from "../components/Profile";
+import {CartPage} from "../components/Cart/CartPage";
 export function MyBrowserRouter(){
     return <HashRouter>
         <Routes>
@@ -39,6 +40,10 @@ export function MyBrowserRouter(){
                    path="/Profile"
                    element={<Profile/>}
             />;
+            <Route index
+                   path="/Cart"
+                   element={<CartPage/>}
+            />;v
         </Routes>
 
     </HashRouter>
