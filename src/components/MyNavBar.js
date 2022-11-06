@@ -39,9 +39,10 @@ export function MyNavBar() {
                                     title="Shopping Cart"
                                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                                 >
-                                    <NavDropdown.Item href="#/Cart">Open my Cart</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    {cart.map(item => <NavDropdown.Item href="#/Cart" className={"d-flex justify-content-between"}><p style={{width:"10ch",textOverflow:"ellipsis",whiteSpace:"nowrap",overflow:"hidden"}}>{item.name}</p><p>{item.amount}</p></NavDropdown.Item>)}
+                                    <NavDropdown.Item disabled={!cart.length>0} href="#/Cart">{cart.length>0? "Open shopping cart": "Cart is empty"}</NavDropdown.Item>
+
+                                    {cart.length>0&&<NavDropdown.Divider />}
+                                    {cart.map(item => <NavDropdown.Item  href="#/Cart" className={"d-flex justify-content-between"}><p style={{width:"10ch",textOverflow:"ellipsis",whiteSpace:"nowrap",overflow:"hidden"}}>{item.name}</p><p>{item.amount}</p></NavDropdown.Item>)}
                                 </NavDropdown>
                             </Nav>
                             {auth.currentUser? <Button href="#/Profile" variant="dark">Profile</Button>:<Button href="#/Login" variant="dark">Login</Button>}
