@@ -123,10 +123,12 @@ export function StorePage() {
     async function addItemSave(item) {
         try {
             await addDoc(collectionRef, item);
-            console.log("add item done")
+            console.log(`add ${item.name} done`)
+            return true;
         } catch {
             console.log("ERROR add item NOT done")
         }
+        return false;
     }
 
     async function editItemSave(item) {
