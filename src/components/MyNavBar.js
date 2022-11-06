@@ -12,6 +12,7 @@ import {useCartContext} from "../contexts/cartContext";
 export function MyNavBar() {
     const expand = "sm";
     const {cart} = useCartContext();
+    const {removeCart} = useCartContext();
 
     return (
         <>
@@ -33,7 +34,7 @@ export function MyNavBar() {
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
                                 <Nav.Link href="#/">Home</Nav.Link>
-                                <Nav.Link href="#/AboutPage">About us</Nav.Link>
+                                {/*<Nav.Link href="#/AboutPage">About us</Nav.Link>*/}
                                 <Nav.Link href="#/Webshop">Webshop</Nav.Link>
                                 <NavDropdown
                                     title="Shopping Cart"
@@ -42,7 +43,7 @@ export function MyNavBar() {
                                     <NavDropdown.Item disabled={!cart.length>0} href="#/Cart">{cart.length>0? "Open shopping cart": "Cart is empty"}</NavDropdown.Item>
 
                                     {cart.length>0&&<NavDropdown.Divider />}
-                                    {cart.map(item => <NavDropdown.Item  href="#/Cart" className={"d-flex justify-content-between"}><p style={{width:"10ch",textOverflow:"ellipsis",whiteSpace:"nowrap",overflow:"hidden"}}>{item.name}</p><p>{item.amount}</p></NavDropdown.Item>)}
+                                    {cart.map(item => <NavDropdown.Item  href="#/Cart" className={"d-flex justify-content-between"}><p style={{width:"10ch",textOverflow:"ellipsis",whiteSpace:"nowrap",overflow:"hidden"}}>{item.name}</p><p>{item.amount}</p><Button size="sm" variant="danger" onClick={(e) => {e.stopPropagation(); e.preventDefault(); removeCart(item)}}>X</Button></NavDropdown.Item>)}
                                 </NavDropdown>
                             </Nav>
                             {auth.currentUser? <Button href="#/Profile" variant="dark">Profile</Button>:<Button href="#/Login" variant="dark">Login</Button>}
