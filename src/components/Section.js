@@ -14,7 +14,7 @@ export function Section(props) {
     return (
         <div style={{}} className="d-flex justify-content-center gap-5">
             <h1 style={{textAlign: "center", marginBottom: "5rem"}}>{title}</h1>
-            <div className="d-flex flex-row gap-5 flex-wrap m-5">
+            <div className="d-flex flex-row gap-5 flex-wrap">
                 {children}
             </div>
         </div>

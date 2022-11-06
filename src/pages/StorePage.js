@@ -1,18 +1,19 @@
-import {collection,updateDoc,deleteDoc,addDoc} from 'firebase/firestore'
+import {collection, updateDoc, deleteDoc, addDoc} from 'firebase/firestore'
 import {auth, firestoreDB} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
-import {CardGroup, Form, Modal} from "react-bootstrap";
+import {CardGroup, Col, Form, Modal, Row} from "react-bootstrap";
 import {useState} from "react";
 import {filterItems} from "../utils/Filters";
 import Button from "react-bootstrap/Button";
 import {useAuthValue} from "../contexts/AuthContext";
+import Container from "react-bootstrap/Container";
 
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
         return {
             name: dataInApp.name,
-            price:Number(dataInApp.price),
+            price: Number(dataInApp.price),
             description: dataInApp.description,
         }
     },
@@ -60,8 +61,8 @@ function ItemFormEdit(props) {
 }
 
 function ItemFormAdd(props) {
-    const {onSaveItem,onClose} = props;
-    const [itemToAdd, setItemToAdd] = useState({name:"item name",price:0,description:"description here"});
+    const {onSaveItem, onClose} = props;
+    const [itemToAdd, setItemToAdd] = useState({name: "item name", price: 0, description: "description here"});
     return (
         <Modal show={!!itemToAdd} onHide={onClose}>
             <Modal.Header closeButton>
@@ -94,8 +95,7 @@ function ItemFormAdd(props) {
 }
 
 
-
-export function StorePage(){
+export function StorePage() {
     const collectionRef = collection(firestoreDB, 'Test-Items').withConverter(firestoreConverter);
     const [searchInput, setSearchInput] = useState("");
     const [addItemForm, setAddItemForm] = useState(false);
@@ -109,7 +109,6 @@ export function StorePage(){
         console.log(`editing item ${item.name}`);
         setItemSelected(item);
     }
-
 
 
     async function deleteItem(item) {
@@ -143,33 +142,40 @@ export function StorePage(){
     }
 
     return <div>
-        <h1>Webshop</h1>
-        {adminList.includes(auth.currentUser?.email) && <Button onClick={()=>setAddItemForm(!addItemForm)}>add item</Button>}
+        <h1 className={"text-center"}>Webshop</h1>
+        {adminList.includes(auth.currentUser?.email) &&
+            <Button onClick={() => setAddItemForm(!addItemForm)}>add item</Button>}
 
-        <label htmlFor="search">search: </label>
-        <input id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
-        <label htmlFor="search">max Price: </label>
-        <input id="search" type="number" min="0" max="100" value={maxPriceInput} onChange={e => setMaxPriceInput(e.target.value)}/>
-        <div>
-            <>
-                {itemSelected && <ItemFormEdit
-                    item={itemSelected}
-                    onClose={() => setItemSelected()}
-                    onSaveItem={editItemSave}/>}
-            </>
-        </div>
-        <div>
-            <>
-                {addItemForm && <ItemFormAdd
-                    onSaveItem={addItemSave}
-                    onClose={() => setAddItemForm(false)}/>}
-            </>
-        </div>
-        <CardGroup><Shirts shirts={filterItems(values,searchInput,maxPriceInput)}
-                           onEditItem={editItem}
-                           onDeleteItem={deleteItem
-        }
-        /></CardGroup>
+        <Container className={"d-flex align-items-center"}>
+            <Row className={"mt-5"}>
+                <Col xs lg="2" className={"d-flex flex-column text-align-left"}>
+                    <label htmlFor="search">search: </label>
+                    <input id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
+                    <label htmlFor="search">max Price: </label>
+                    <input id="search" type="number" min="0" max="100" value={maxPriceInput}
+                           onChange={e => setMaxPriceInput(e.target.value)}/>
+                    <div>
+                        {itemSelected && <ItemFormEdit
+                            item={itemSelected}
+                            onClose={() => setItemSelected()}
+                            onSaveItem={editItemSave}/>}
+                    </div>
+                    <div>
+                        {addItemForm && <ItemFormAdd
+                            onSaveItem={addItemSave}
+                            onClose={() => setAddItemForm(false)}/>}
+                    </div>
+                </Col>
+
+                <Col md="auto">
+                    <CardGroup><Shirts shirts={filterItems(values, searchInput, maxPriceInput)}
+                                       onEditItem={editItem}
+                                       onDeleteItem={deleteItem
+                                       }
+                    /></CardGroup>
+                </Col>
+            </Row>
+        </Container>
 
     </div>
 }
