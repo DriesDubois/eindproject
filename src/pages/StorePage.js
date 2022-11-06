@@ -1,5 +1,5 @@
 import {collection, updateDoc, deleteDoc, addDoc} from 'firebase/firestore'
-import {auth, firestoreDB} from "../utils/firebase";
+import {auth, firestoreDB,storage} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
 import {CardGroup, Col, Form, Modal, Row} from "react-bootstrap";
@@ -8,6 +8,7 @@ import {filterItems} from "../utils/Filters";
 import Button from "react-bootstrap/Button";
 import {useAuthValue} from "../contexts/AuthContext";
 import Container from "react-bootstrap/Container";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
@@ -15,6 +16,7 @@ const firestoreConverter = {
             name: dataInApp.name,
             price: Number(dataInApp.price),
             description: dataInApp.description,
+            imageURL: dataInApp.imageURL
         }
     },
     fromFirestore: function (snapshot, options) {
@@ -62,7 +64,40 @@ function ItemFormEdit(props) {
 
 function ItemFormAdd(props) {
     const {onSaveItem, onClose} = props;
-    const [itemToAdd, setItemToAdd] = useState({name: "item name", price: 0, description: "description here"});
+    const [file, setFile] = useState("");
+    const [imgUrl, setImgUrl] = useState("");
+    const [progresspercent, setProgresspercent] = useState(0);
+
+    const [itemToAdd, setItemToAdd] = useState({name: "item name", price: 0, description: "description here",imageURL:{imgUrl}});
+    function handleChange(event) {
+        setFile(event.target.files[0]);
+    }
+
+    const handleSubmit = (e) => {
+        if (!file) {
+            alert("Please choose a file first!")
+        }
+        const storageRef = ref(storage, `images/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on("state_changed",
+            (snapshot) => {
+                const progress =
+                    Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                setProgresspercent(progress);
+            },
+            (error) => {
+                alert(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    setImgUrl(downloadURL)
+                });
+            }
+        );
+    }
+
+
     return (
         <Modal show={!!itemToAdd} onHide={onClose}>
             <Modal.Header closeButton>
@@ -83,9 +118,24 @@ function ItemFormAdd(props) {
                         value={itemToAdd.description}
                         onChange={e => setItemToAdd({...itemToAdd, description: e.target.value})}/>
                 </Form>
+                <div>
+                    <input type='file' onChange={handleChange} accept="/image/*"/>
+                    <Button onClick={handleSubmit}  type='submit'>Upload</Button>
+                    {
+                        !imgUrl &&
+                        <div className='outerbar'>
+                            <div className='innerbar' style={{ width: `${progresspercent}%` }}>{progresspercent}%</div>
+                        </div>
+                    }
+                    {
+                        imgUrl &&
+                        <img src={imgUrl} alt='uploaded file' height={200} />
+                    }
+                </div>
                 <div className="d-flex justify-content-center p-2">
                     <Button className="m-1" size="lg" onClick={() => onClose()}>cancel</Button>
                     <Button className="m-1" size="lg" onClick={async () => {
+                        setItemToAdd({...itemToAdd, imageURL: {imgUrl}});
                         if (await onSaveItem(itemToAdd)) onClose();
                     }}>save</Button>
                 </div>

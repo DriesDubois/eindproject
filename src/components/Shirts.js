@@ -39,9 +39,9 @@ export function Shirt(props) {
     return (
         <Card style={{width:"350px"}}>
             <Card.Header as="h5" style={{textAlign:"center"}}>{shirt.name}</Card.Header>
-            <Card.Title></Card.Title>
+            <Card.Img src={shirt?.imageURL}></Card.Img>
             <Card.Body>
-                {shirt.price && <p className="text-center">{shirt.price} </p>}
+                {shirt.price && <p className="text-center">{shirt.price} Euro</p>}
                 {shirt.description && <p className="text-center">{shirt.description} </p>}
             </Card.Body>
             {shirt.image && <Card.Img style={{maxWidth: "300px"}} variant="bottom" src={shirt.image}/>}
@@ -52,7 +52,8 @@ export function Shirt(props) {
                 name: shirt.name,
                 amount: 1,
                 price: shirt.price,
-                description:shirt.description,
+                imgURL: shirt.imageURL,
+                description: shirt.description,
                 cartid: generateid(20)
             })} variant="warning">Add to cart</Button>
         </Card>
