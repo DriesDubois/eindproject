@@ -141,7 +141,7 @@ export function StorePage() {
         return false;
     }
 
-    return <div>
+    return <div className={"mb-5"}>
         <h1 className={"text-center"}>Webshop</h1>
         {adminList.includes(auth.currentUser?.email) &&
             <Button onClick={() => setAddItemForm(!addItemForm)}>add item</Button>}
