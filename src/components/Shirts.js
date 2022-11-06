@@ -41,7 +41,7 @@ export function Shirt(props) {
             <Card.Header as="h5" style={{textAlign:"center"}}>{shirt.name}</Card.Header>
             <Card.Title></Card.Title>
             <Card.Body>
-                {shirt.price && <p className="text-center">{shirt.price} </p>}
+                {shirt.price && <p className="text-center">{shirt.price} Euro</p>}
                 {shirt.description && <p className="text-center">{shirt.description} </p>}
             </Card.Body>
             {shirt.image && <Card.Img style={{maxWidth: "300px"}} variant="bottom" src={shirt.image}/>}

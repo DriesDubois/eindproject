@@ -2,12 +2,11 @@ import {collection, updateDoc, deleteDoc, addDoc} from 'firebase/firestore'
 import {auth, firestoreDB} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
-import {CardGroup, Col, Form, Modal, Row} from "react-bootstrap";
+import {CardGroup, Form, Modal} from "react-bootstrap";
 import {useState} from "react";
 import {filterItems} from "../utils/Filters";
 import Button from "react-bootstrap/Button";
 import {useAuthValue} from "../contexts/AuthContext";
-import Container from "react-bootstrap/Container";
 
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
@@ -145,39 +144,45 @@ export function StorePage() {
 
     return <div className={"mb-5"}>
         <h1 className={"text-center"}>Webshop</h1>
-        {adminList.includes(auth.currentUser?.email) &&
-            <Button onClick={() => setAddItemForm(!addItemForm)}>add item</Button>}
 
-        <Container className={"d-flex align-items-center"}>
-            <Row className={"mt-5"}>
-                <Col xs lg="2" className={"d-flex flex-column text-align-left"}>
+
+        <div className={"d-flex flex-row"}>
+            <div className={"d-flex flex-column p-3 align-items-left gap-3"}>
+                {adminList.includes(auth.currentUser?.email) &&
+                    <Button onClick={() => setAddItemForm(!addItemForm)}>add item</Button>}
+                <div className={"d-flex justify-content-between"}>
                     <label htmlFor="search">search: </label>
-                    <input id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
-                    <label htmlFor="search">max Price: </label>
-                    <input id="search" type="number" min="0" max="100" value={maxPriceInput}
-                           onChange={e => setMaxPriceInput(e.target.value)}/>
-                    <div>
-                        {itemSelected && <ItemFormEdit
-                            item={itemSelected}
-                            onClose={() => setItemSelected()}
-                            onSaveItem={editItemSave}/>}
-                    </div>
-                    <div>
-                        {addItemForm && <ItemFormAdd
-                            onSaveItem={addItemSave}
-                            onClose={() => setAddItemForm(false)}/>}
-                    </div>
-                </Col>
+                    <input style={{maxWidth:"150px"}} id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
+                </div>
 
-                <Col md="auto">
-                    <CardGroup><Shirts shirts={filterItems(values, searchInput, maxPriceInput)}
-                                       onEditItem={editItem}
-                                       onDeleteItem={deleteItem
-                                       }
-                    /></CardGroup>
-                </Col>
-            </Row>
-        </Container>
+                <div className={"d-flex justify-content-between"}>
+                    <label htmlFor="search">max Price: </label>
+                    <input style={{maxWidth:"75px"}} id="search" type="number" min="0" max="100" value={maxPriceInput}
+                           onChange={e => setMaxPriceInput(e.target.value)}/>
+                </div>
+
+                <div>
+                    {itemSelected && <ItemFormEdit
+                        item={itemSelected}
+                        onClose={() => setItemSelected()}
+                        onSaveItem={editItemSave}/>}
+                </div>
+                <div>
+                    {addItemForm && <ItemFormAdd
+                        onSaveItem={addItemSave}
+                        onClose={() => setAddItemForm(false)}/>}
+                </div>
+            </div>
+
+            <div>
+                <CardGroup><Shirts shirts={filterItems(values, searchInput, maxPriceInput)}
+                                   onEditItem={editItem}
+                                   onDeleteItem={deleteItem
+                                   }
+                /></CardGroup>
+            </div>
+        </div>
+
 
     </div>
 }
