@@ -97,7 +97,6 @@ function ItemFormAdd(props) {
 
 export function StorePage(){
     const collectionRef = collection(firestoreDB, 'Test-Items').withConverter(firestoreConverter);
-    const [shortSleeves, setShortSleeves] = useState(undefined);
     const [searchInput, setSearchInput] = useState("");
     const [addItemForm, setAddItemForm] = useState(false);
     const [maxPriceInput, setMaxPriceInput] = useState("");
@@ -151,18 +150,6 @@ export function StorePage(){
         <input id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
         <label htmlFor="search">max Price: </label>
         <input id="search" type="number" min="0" max="100" value={maxPriceInput} onChange={e => setMaxPriceInput(e.target.value)}/>
-        {/*<Form className="mx-3">*/}
-        {/*    <Form.Label>short sleeves</Form.Label><br/>*/}
-        {/*    <Form.Check inline checked={shortSleeves===false} label="lange mouwen" name="shortSleeves"*/}
-        {/*                type="radio" id="shortSleeves-0"*/}
-        {/*                onChange={() => setShortSleeves(false)}/>*/}
-        {/*    <Form.Check inline checked={shortSleeves===true} label="korte mouwen" name="shortSleeves"*/}
-        {/*                type="radio" id="shortSleeves-1"*/}
-        {/*                onChange={() => setShortSleeves(true)}/>*/}
-        {/*    <Form.Check inline checked={shortSleeves===undefined} label="geen voorkeur" name="shortSleeves"*/}
-        {/*                type="radio" id="shortSleeves-2"*/}
-        {/*                onChange={() => setShortSleeves(undefined)}/>*/}
-        {/*</Form>*/}
         <div>
             <>
                 {itemSelected && <ItemFormEdit
@@ -178,7 +165,7 @@ export function StorePage(){
                     onClose={() => setAddItemForm(false)}/>}
             </>
         </div>
-        <CardGroup><Shirts shirts={filterItems(values,searchInput,maxPriceInput,shortSleeves)}
+        <CardGroup><Shirts shirts={filterItems(values,searchInput,maxPriceInput)}
                            onEditItem={editItem}
                            onDeleteItem={deleteItem
         }

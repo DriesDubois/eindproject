@@ -52,6 +52,7 @@ export function Shirt(props) {
                 name: shirt.name,
                 amount: 1,
                 price: shirt.price,
+                description:shirt.description,
                 cartid: generateid(20)
             })} variant="warning">Add to cart</Button>
         </Card>

@@ -5,6 +5,7 @@ const CartContext = createContext();
 export function CartProvider(props) {
     const [cart, setCart] = useState([])
 
+
     let localCart = localStorage.getItem("cart");
 
     useEffect(() => {
@@ -27,11 +28,19 @@ export function CartProvider(props) {
         }
     }, [cart, setCart])
 
+    const removeCart = useCallback((item) =>{
+        setCart(cart.filter(c => {return c.cartid !== item.cartid ? c : ""}))
+        localStorage.setItem("cart", JSON.stringify(cart.filter(c => {return c.cartid !== item.cartid ? c : ""})))
+    }, [cart, setCart])
 
+    const changeAmountCart = useCallback((item) => {
+        setCart(cart.map(c => c.cartid === item.cartid ? {...c, amount: item.amount} : c))
+        localStorage.setItem("cart", JSON.stringify(cart.map(c => c.cartid === item.cartid ? {...c, amount: item.amount} : c)))
+    }, [cart, setCart])
 
     const api = useMemo(() => ({
-        cart, setCart, addItem
-    }), [cart, setCart, addItem]);
+        cart, setCart, addItem, removeCart, changeAmountCart
+    }), [cart, setCart, addItem, removeCart, changeAmountCart]);
 
     return <CartContext.Provider value={api}>
         {props.children}
