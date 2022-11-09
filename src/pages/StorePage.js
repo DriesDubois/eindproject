@@ -1,5 +1,5 @@
 import {collection, updateDoc, deleteDoc, addDoc} from 'firebase/firestore'
-import {auth, firestoreDB,storage} from "../utils/firebase";
+import {auth, firestoreDB, storage} from "../utils/firebase";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {Shirts} from "../components/Shirts";
 import {CardGroup, Form, Modal} from "react-bootstrap";
@@ -7,8 +7,7 @@ import {useState} from "react";
 import {filterItems} from "../utils/Filters";
 import Button from "react-bootstrap/Button";
 import {useAuthValue} from "../contexts/AuthContext";
-import Container from "react-bootstrap/Container";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 
 const firestoreConverter = {
     toFirestore: function (dataInApp) {
@@ -68,12 +67,18 @@ function ItemFormAdd(props) {
     const [imgUrl, setImgUrl] = useState("");
     const [progresspercent, setProgresspercent] = useState(0);
 
-    const [itemToAdd, setItemToAdd] = useState({name: "item name", price: 0, description: "description here",imageURL:{imgUrl}});
+    const [itemToAdd, setItemToAdd] = useState({
+        name: "item name",
+        price: 0,
+        description: "description here",
+        imageURL: ""
+    });
+
     function handleChange(event) {
         setFile(event.target.files[0]);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = () => {
         if (!file) {
             alert("Please choose a file first!")
         }
@@ -120,23 +125,30 @@ function ItemFormAdd(props) {
                 </Form>
                 <div>
                     <input type='file' onChange={handleChange} accept="/image/*"/>
-                    <Button onClick={handleSubmit}  type='submit'>Upload</Button>
+                    <Button onClick={handleSubmit} type='submit'>Upload</Button>
                     {
                         !imgUrl &&
                         <div className='outerbar'>
-                            <div className='innerbar' style={{ width: `${progresspercent}%` }}>{progresspercent}%</div>
+                            <div className='innerbar' style={{width: `${progresspercent}%`}}>{progresspercent}%</div>
                         </div>
                     }
                     {
                         imgUrl &&
-                        <img src={imgUrl} alt='uploaded file' height={200} />
+                        <>
+                            <img src={imgUrl} alt='uploaded file' height={200}/>
+                            <Button onClick={() => setItemToAdd({...itemToAdd, imageURL: imgUrl})}
+                                    type='submit'>Save</Button>
+                        </>
+
                     }
                 </div>
                 <div className="d-flex justify-content-center p-2">
                     <Button className="m-1" size="lg" onClick={() => onClose()}>cancel</Button>
                     <Button className="m-1" size="lg" onClick={async () => {
-                        setItemToAdd({...itemToAdd, imageURL: {imgUrl}});
+                        // cant't call this here for yet to be determined reason
+                        // setItemToAdd({...itemToAdd, imageURL: imgUrl});
                         if (await onSaveItem(itemToAdd)) onClose();
+                        console.log(itemToAdd, imgUrl);
                     }}>save</Button>
                 </div>
             </div>
@@ -203,12 +215,13 @@ export function StorePage() {
                     <Button onClick={() => setAddItemForm(!addItemForm)}>add item</Button>}
                 <div className={"d-flex justify-content-between"}>
                     <label htmlFor="search">search: </label>
-                    <input style={{maxWidth:"150px"}} id="search" value={searchInput} onChange={e => setSearchInput(e.target.value)}/>
+                    <input style={{maxWidth: "150px"}} id="search" value={searchInput}
+                           onChange={e => setSearchInput(e.target.value)}/>
                 </div>
 
                 <div className={"d-flex justify-content-between"}>
                     <label htmlFor="search">max Price: </label>
-                    <input style={{maxWidth:"75px"}} id="search" type="number" min="0" max="100" value={maxPriceInput}
+                    <input style={{maxWidth: "75px"}} id="search" type="number" min="0" max="100" value={maxPriceInput}
                            onChange={e => setMaxPriceInput(e.target.value)}/>
                 </div>
 
