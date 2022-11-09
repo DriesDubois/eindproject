@@ -16,7 +16,7 @@ export function MyNavBar() {
 
     return (
         <>
-            <Navbar sticky="top" key={expand} expand={expand} className="pb-3" style={{backgroundColor:"rgba(102,102,102,0.6)",fontFamily: "Iceberg",fontSize:"22px",fontWeight:"bold",fontTransform:"uppercase",backdropFilter:"blur(5px)"}}>
+            <Navbar  variant="light" sticky="top" key={expand} expand={expand} className="pb-3" style={{fontFamily: "Iceberg",fontSize:"22px",fontWeight:"bold",fontTransform:"uppercase",backdropFilter:"blur(20px)"}}>
                 <Container fluid>
 
                     <Navbar.Brand style={{color:"#cd5c5c",fontWeight:"bold"}} href="#/">ArcoLinux - Webshop</Navbar.Brand>
