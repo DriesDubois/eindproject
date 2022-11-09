@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import {auth} from '../utils/firebase'
-import {useNavigate, Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {useAuthValue} from '../contexts/AuthContext'
+import Button from "react-bootstrap/Button";
 
 export function Register() {
 
@@ -46,11 +47,11 @@ export function Register() {
     }
 
     return (
-        <div className='center'>
-            <div className='auth'>
-                <h1>Register</h1>
+        <div>
+            <h1 className={"text-center mb-3"}>Register</h1>
+            <div className='text-center'>
                 {error && <div className='auth__error'>{error}</div>}
-                <form onSubmit={register} name='registration_form'>
+                <form className={"d-flex flex-column align-items-center gap-3 mb-3"} onSubmit={register} name='registration_form'>
                     <input
                         type='email'
                         value={email}
@@ -72,11 +73,12 @@ export function Register() {
                         placeholder='Confirm password'
                         onChange={e => setConfirmPassword(e.target.value)}/>
 
-                    <button type='submit'>Register</button>
+                    <Button Variant="info" type='submit'>Register</Button>
+
                 </form>
                 <span>
-          Already have an account?
-          <Link to='/login'>login</Link>
+          <p>Already have an account? </p>
+          <Button className={"mb-3"} Variant="warning" href="#/Login">Log in</Button>
         </span>
             </div>
         </div>

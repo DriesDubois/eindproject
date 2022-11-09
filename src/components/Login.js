@@ -1,12 +1,12 @@
 import {useState} from 'react'
-import { Link } from 'react-router-dom'
-import { useAuthValue } from "../contexts/AuthContext"
+import {useAuthValue} from "../contexts/AuthContext"
 
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {auth} from '../utils/firebase'
 import {useNavigate} from 'react-router-dom'
+import Button from "react-bootstrap/Button";
 
-export function Login(){
+export function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -20,26 +20,27 @@ export function Login(){
         e.preventDefault()
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
-                if(!auth.currentUser.emailVerified) {
+                if (!auth.currentUser.emailVerified) {
                     sendEmailVerification(auth.currentUser)
                         .then(() => {
                             setTimeActive(true)
                             history('/VerifyEmail')
                         })
                         .catch(err => alert(err.message))
-                }else{
+                } else {
                     history('/Profile')
                 }
             })
             .catch(err => setError(err.message))
     }
 
-    return(
-        <div className='center'>
-            <div className='auth'>
-                <h1>Log in</h1>
+    return (
+        <div>
+            <h1 className={"text-center mb-3"}>Log in</h1>
+            <div className='text-center'>
+
                 {error && <div className='auth__error'>{error}</div>}
-                <form onSubmit={login} name='login_form'>
+                <form className={"d-flex flex-column align-items-center gap-3 mb-3"} onSubmit={login} name='login_form'>
                     <input
                         type='email'
                         value={email}
@@ -53,13 +54,13 @@ export function Login(){
                         required
                         placeholder='Enter your password'
                         onChange={e => setPassword(e.target.value)}/>
+                    <div>
+                        <Button className={"mx-3"} Variant="info" type='submit'>Login</Button>
+                        <Button Variant="warning" href="#/Register">Register an account</Button>
+                    </div>
 
-                    <button type='submit'>Login</button>
                 </form>
-                <p>
-                    Don't have and account?
-                    <Link to='/register'>Create one here</Link>
-                </p>
+
             </div>
         </div>
     )
